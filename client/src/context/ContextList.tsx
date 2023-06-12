@@ -1,123 +1,45 @@
-import { createContext, useState, ReactNode } from 'react';
+import { createContext, useState, ReactNode, useEffect } from 'react';
+import { Dayjs } from 'dayjs';
+import { getItems } from '../services/api.ts';
 
-interface MyContextType {
+interface ContextListType {
   sortMethod: string;
+  // eslint-disable-next-line no-unused-vars
   updateLista: (newValue: string) => void;
-  items: [{content: string, type: string, status: boolean, favorite: boolean}]
+  items: {
+    content: string;
+    date: Dayjs | null;
+    isComplete: boolean;
+    isFavorite: boolean;
+  }[];
 }
 
-const ContextList = createContext<MyContextType | undefined>(undefined);
+const ContextList = createContext<ContextListType | undefined>(undefined);
 
 interface MyContextProviderProps {
   children: ReactNode;
 }
 
-const MyContextProvider = ({ children }: MyContextProviderProps) => {
-
-  const items = [
-    {
-      content: 'Tarefa',
-      type: 'track',
-      status: false,
-      favorite: false
-    },
-    {
-      content: 'Tarefa',
-      type: 'unTracked',
-      status: false,
-      favorite: false
-    },
-    {
-      content: 'Tarefa',
-      type: 'unTracked',
-      status: false,
-      favorite: true
-    },
-    {
-      content: 'Tarefa',
-      type: 'track',
-      status: false,
-      favorite: true
-    },
-    {
-      content: 'Tarefa',
-      type: 'track',
-      status: false,
-      favorite: true
-    },
-    {
-      content: 'Tarefa',
-      type: 'unTracked',
-      status: false,
-      favorite: true
-    },
-    {
-      content: 'Tarefa',
-      type: 'unTracked',
-      status: false,
-      favorite: true
-    },
-    {
-      content: 'Tarefa',
-      type: 'track',
-      status: false,
-      favorite: true
-    },
-    {
-      content: 'Tarefa',
-      type: 'track',
-      status: false,
-      favorite: true
-    },
-    {
-      content: 'Tarefa',
-      type: 'unTracked',
-      status: false,
-      favorite: true
-    },
-    {
-      content: 'Tarefa',
-      type: 'track',
-      status: false,
-      favorite: true
-    },
-    {
-      content: 'Tarefa',
-      type: 'unTracked',
-      status: false,
-      favorite: true
-    },
-    {
-      content: 'Tarefa',
-      type: 'track',
-      status: false,
-      favorite: true
-    },
-    {
-      content: 'Tarefa',
-      type: 'track',
-      status: true,
-      favorite: true
-    },
-    {
-      content: 'Tarefa',
-      type: 'unTracked',
-      status: true,
-      favorite: false
-    },
-  ]
-  
+function MyContextProvider({ children }: MyContextProviderProps) {
+  const [items, setItems] = useState([]);
   const [sortMethod, setSortMethod] = useState('Tasks');
 
   const updateLista = (newValue: string) => {
     setSortMethod(newValue);
   };
 
+  useEffect(() => {
+    (async () => {
+      const response = await getItems();
+      setItems(response);
+    })();
+  }, []);
+
   return (
     <ContextList.Provider value={{ sortMethod, updateLista, items }}>
       {children}
     </ContextList.Provider>
   );
-};
+}
 
 export { ContextList, MyContextProvider };

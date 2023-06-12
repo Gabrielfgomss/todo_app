@@ -1,28 +1,19 @@
 import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
-import { MouseEvent, useState } from 'react'
+import { MouseEvent, useState } from 'react';
 
 export default function Profile() {
-
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
   const handleMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
-
   const handleClose = () => {
     setAnchorEl(null);
   };
-
   return (
     <div>
-      <IconButton
-        size="large"
-        onClick={handleMenu}
-        color="inherit"
-      >
-        <Avatar
-          sx={{ width: 24, height: 24 }}
-          src="src/assets/gabriel.png" />
+      <IconButton size="large" onClick={handleMenu} color="inherit">
+        <Avatar sx={{ width: 24, height: 24 }} src="src/assets/gabriel.png" />
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -42,5 +33,5 @@ export default function Profile() {
         <MenuItem onClick={handleClose}>Sair</MenuItem>
       </Menu>
     </div>
-  )
+  );
 }

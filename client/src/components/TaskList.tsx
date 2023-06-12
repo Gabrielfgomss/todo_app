@@ -1,85 +1,75 @@
-import ScheduleIcon from '@mui/icons-material/Schedule';
-import { useContext, useState } from 'react'
-import { ContextList } from '../context/ContextList';
-import { IconButton } from '@mui/material';
-import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
-import TurnedInOutlinedIcon from '@mui/icons-material/TurnedInOutlined';
-import TurnedInNotOutlinedIcon from '@mui/icons-material/TurnedInNotOutlined';
+import React, { useContext } from 'react';
+import { ContextList } from '../context/ContextList.tsx';
+import Task from './Task.tsx';
+
+interface SortItems {
+  [key: string]: () => React.JSX.Element[];
+}
 
 export default function TaskList() {
-
-  const { sortMethod, items } = useContext(ContextList)
-
-  const [isClicked, setIsClicked] = useState(null);
-
-  const handleClick = (event) => {
-    console.log(event.currentTarget)
-    setIsClicked(event.currentTarget);
-  };
-
-  const sortItems = {
+  const context = useContext(ContextList);
+  const items = context?.items ?? [];
+  console.log(items);
+  const sortMethod = context?.sortMethod;
+  const sortItems: SortItems = {
     Tasks() {
-      return items.filter(item => item.status === false).map((item, index) =>
-        <div key={index} className="bg-[#DAD7CD] flex justify-between p-4 rounded-lg">
-          <p className='grid items-center gap-x-1'>
-            <RadioButtonUncheckedOutlinedIcon sx={{ gridColumnStart: '1' }} />
-            <p className='col-start-2'>{item.content}</p>
-            {item.type === 'track' && <ScheduleIcon sx={{ gridColumnStart: '2', height: '14px' }} />}
-          </p>
-          <IconButton sx={{ padding: '0px', color: '#000' }} onClick={handleClick}>
-            {item.favorite === true ? <TurnedInOutlinedIcon /> : <TurnedInNotOutlinedIcon />}
-          </IconButton>
-        </div>)
+      return items
+        .filter((item) => item.isComplete === false)
+        .map((item, index: number) => (
+          <Task
+            key={index}
+            index={index}
+            content={item.content}
+            dated={item.date}
+            isFavorite={item.isFavorite}
+            isComplete={item.isComplete}
+          />
+        ));
     },
     Importants() {
-      return items.filter(item => item.favorite === true)
-        .map((item, index) =>
-          <div key={index} className="bg-[#DAD7CD] flex justify-between p-4 rounded-lg">
-            <p className='grid items-center gap-x-1'>
-              <RadioButtonUncheckedOutlinedIcon sx={{ gridColumnStart: '1' }} />
-              <p className='col-start-2'>{item.content}</p>
-              {item.type === 'track' && <ScheduleIcon sx={{ gridColumnStart: '2', height: '14px' }} />}
-            </p>
-            <IconButton sx={{ padding: '0px', color: '#000' }} onClick={handleClick}>
-              {item.favorite === true ? <TurnedInOutlinedIcon /> : <TurnedInNotOutlinedIcon />}
-            </IconButton>
-          </div>)
+      return items
+        .filter((item) => item.isFavorite === true)
+        .map((item, index: number) => (
+          <Task
+            key={index}
+            index={index}
+            content={item.content}
+            dated={item.date}
+            isFavorite={item.isFavorite}
+            isComplete={item.isComplete}
+          />
+        ));
     },
     ToDo() {
-      return items.filter(item => item.type === 'track')
-        .map((item, index) =>
-          <div key={index} className="bg-[#DAD7CD] flex justify-between p-4 rounded-lg">
-            <p className='grid items-center gap-x-1'>
-              <RadioButtonUncheckedOutlinedIcon sx={{ gridColumnStart: '1' }} />
-              <p className='col-start-2'>{item.content}</p>
-              {item.type === 'track' && <ScheduleIcon sx={{ gridColumnStart: '2', height: '14px' }} />}
-            </p>
-            <IconButton sx={{ padding: '0px', color: '#000' }} onClick={handleClick}>
-              {item.favorite === true ? <TurnedInOutlinedIcon /> : <TurnedInNotOutlinedIcon />}
-            </IconButton>
-          </div>)
+      return items
+        .filter((item) => item.date !== null)
+        .map((item, index: number) => (
+          <Task
+            key={index}
+            index={index}
+            content={item.content}
+            dated={item.date}
+            isFavorite={item.isFavorite}
+            isComplete={item.isComplete}
+          />
+        ));
     },
     Completes() {
-      return items.filter(item => item.status === true)
-        .map((item, index) =>
-          <div key={index} className="bg-[#DAD7CD] flex justify-between p-4 rounded-lg">
-            <p className='grid items-center gap-x-1'>
-              <RadioButtonUncheckedOutlinedIcon sx={{ gridColumnStart: '1' }} />
-              <p className='col-start-2'>{item.content}</p>
-              {item.type === 'track' && <ScheduleIcon sx={{ gridColumnStart: '2', height: '14px' }} />}
-            </p>
-            <IconButton sx={{ padding: '0px', color: '#000' }} onClick={handleClick}>
-              {item.favorite === true ? <TurnedInOutlinedIcon /> : <TurnedInNotOutlinedIcon />}
-            </IconButton>
-          </div>)
-    }
-  }
-
-  return (
-    <>
-      {
-        sortItems[sortMethod] ? sortItems[sortMethod]() : null
-      }
-    </>
-  )
+      return items
+        .filter((item) => item.isComplete === true)
+        .map((item, index: number) => (
+          <Task
+            key={index}
+            index={index}
+            content={item.content}
+            dated={item.date}
+            isFavorite={item.isFavorite}
+            isComplete={item.isComplete}
+          />
+        ));
+    },
+  };
+  return sortMethod && sortItems[sortMethod] ? (
+    <>{sortItems[sortMethod]()}</>
+  ) : null;
 }

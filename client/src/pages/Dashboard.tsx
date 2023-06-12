@@ -1,14 +1,7 @@
-import { FormEvent } from "react"
-import CreateTask from "../components/CreateTask"
-import TaskList from "../components/TaskList"
+import CreateTask from '../components/CreateTask.tsx';
+import TaskList from '../components/TaskList.tsx';
 
 export default function Dashboard() {
-  
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault()
-    console.log(event?.currentTarget.senha.value)
-  }
-
   return (
     <>
       <div className="p-8">
@@ -16,16 +9,12 @@ export default function Dashboard() {
       </div>
       <div className="w-full">
         <ul className="space-y-4 text-lg  mx-2">
-          {/* {items.map(item =>
-            <li id={item.type} className="bg-[#DAD7CD] p-4 rounded-lg">{item.content}</li>)} */}
           <TaskList />
         </ul>
       </div>
       <div>
-        <form onSubmit={handleSubmit}>
-          <CreateTask />
-        </form>
+        <CreateTask />
       </div>
     </>
-  )
+  );
 }
