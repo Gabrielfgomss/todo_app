@@ -23,5 +23,6 @@ module.exports = {
     'react/react-in-jsx-scope': 'off',
     'react/require-default-props': 'off',
     'react/no-array-index-key': 'off',
+    'no-underscore-dangle': ['error', { allow: ['_id'] }],
   },
 };

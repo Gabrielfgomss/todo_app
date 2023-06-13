@@ -9,16 +9,15 @@ interface SortItems {
 export default function TaskList() {
   const context = useContext(ContextList);
   const items = context?.items ?? [];
-  console.log(items);
   const sortMethod = context?.sortMethod;
   const sortItems: SortItems = {
     Tasks() {
       return items
         .filter((item) => item.isComplete === false)
-        .map((item, index: number) => (
+        .map((item) => (
           <Task
-            key={index}
-            index={index}
+            key={item._id}
+            id={item._id}
             content={item.content}
             dated={item.date}
             isFavorite={item.isFavorite}
@@ -29,10 +28,10 @@ export default function TaskList() {
     Importants() {
       return items
         .filter((item) => item.isFavorite === true)
-        .map((item, index: number) => (
+        .map((item) => (
           <Task
-            key={index}
-            index={index}
+            key={item._id}
+            id={item._id}
             content={item.content}
             dated={item.date}
             isFavorite={item.isFavorite}
@@ -43,10 +42,10 @@ export default function TaskList() {
     ToDo() {
       return items
         .filter((item) => item.date !== null)
-        .map((item, index: number) => (
+        .map((item) => (
           <Task
-            key={index}
-            index={index}
+            key={item._id}
+            id={item._id}
             content={item.content}
             dated={item.date}
             isFavorite={item.isFavorite}
@@ -57,16 +56,19 @@ export default function TaskList() {
     Completes() {
       return items
         .filter((item) => item.isComplete === true)
-        .map((item, index: number) => (
-          <Task
-            key={index}
-            index={index}
-            content={item.content}
-            dated={item.date}
-            isFavorite={item.isFavorite}
-            isComplete={item.isComplete}
-          />
-        ));
+        .map((item) => {
+          console.log(item);
+          return (
+            <Task
+              key={item._id}
+              id={item._id}
+              content={item.content}
+              dated={item.date}
+              isFavorite={item.isFavorite}
+              isComplete={item.isComplete}
+            />
+          );
+        });
     },
   };
   return sortMethod && sortItems[sortMethod] ? (

@@ -27,8 +27,8 @@ class taskController {
 
   static createTask = async (req, res) => {
     try {
-      const { content, isComplete, isFavroite, date } = req.body;
-      const task = new Task({ content, isComplete, isFavroite, date });
+      const { content, isComplete, isFavorite, date } = req.body;
+      const task = new Task({ content, isComplete, isFavorite, date });
       await task.save();
       res.status(201).json(task);
     } catch (error) {

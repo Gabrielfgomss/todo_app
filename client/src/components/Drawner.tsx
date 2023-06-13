@@ -1,4 +1,4 @@
-import { Drawer, IconButton, MenuItem } from '@mui/material';
+import { Drawer, IconButton, MenuItem, ClickAwayListener } from '@mui/material';
 import { useState, useContext, MouseEvent } from 'react';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import TaskIcon from '@mui/icons-material/Task';
@@ -13,9 +13,8 @@ export default function Drawner() {
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   const updateLista = context?.updateLista ?? (() => {});
   const [open, setOpen] = useState(false);
-
   const handleClick = () => {
-    setOpen(true);
+    setOpen(!open);
   };
   const handleCloseDrawer = (event: MouseEvent<HTMLElement>) => {
     setOpen(false);
@@ -32,15 +31,17 @@ export default function Drawner() {
       >
         <MenuIcon />
       </IconButton>
+
       <Drawer
         anchor="left"
         open={open}
+        onClose={handleClick}
         PaperProps={{ sx: { backgroundColor: '#a3b18a', color: '#1b1911' } }}
       >
         <IconButton
           size="large"
           edge="start"
-          onClick={handleCloseDrawer}
+          onClick={handleClick}
           color="inherit"
           sx={{ ml: '4px', justifyContent: 'start' }}
         >
@@ -76,13 +77,6 @@ export default function Drawner() {
         >
           <TaskIcon />
           Completas
-        </MenuItem>
-        <MenuItem
-          onClick={handleCloseDrawer}
-          sx={{ fontWeight: '500', gap: '8px' }}
-        >
-          <ListAltIcon />
-          Lista
         </MenuItem>
       </Drawer>
     </>
