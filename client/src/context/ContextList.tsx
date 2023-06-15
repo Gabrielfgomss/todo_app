@@ -1,4 +1,10 @@
-import { createContext, useState, ReactNode, useMemo, useCallback } from 'react';
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useMemo,
+  useCallback,
+} from 'react';
 
 interface ContextListType {
   sortMethod: string;
@@ -14,10 +20,9 @@ interface MyContextProviderProps {
 
 function MyContextProvider({ children }: MyContextProviderProps) {
   const [sortMethod, setSortMethod] = useState('Tasks');
-  const updateLista = useCallback((newValue: string) => ({
-    setSortMethod(newValue)}), []);
-  };
-
+  const updateLista = useCallback((newValue: string) => {
+    setSortMethod(newValue);
+  }, []);
   const contextValues = useMemo(
     () => ({
       sortMethod,

@@ -19,9 +19,8 @@ const useCrud = () => {
   };
 
   const createTask = async (item: {
-    id: string;
     content: string;
-    date?: { $d: Dayjs | null };
+    date: { $d: Dayjs | null };
   }) => {
     try {
       if (values) {

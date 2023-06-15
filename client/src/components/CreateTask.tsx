@@ -5,10 +5,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { Dayjs } from 'dayjs';
 import { MobileDatePicker } from '@mui/x-date-pickers';
-import Cookies from 'js-cookie';
 
 interface formDataType {
-  id?: string;
   content: string;
   date: {
     $d: Dayjs | null;
@@ -20,7 +18,6 @@ interface ComponentProps {
 }
 
 export default function CreateTask({ createTask }: ComponentProps) {
-  const values = Cookies.get('session');
   const [formData, setFormData] = useState<formDataType>({
     content: '',
     date: {
@@ -52,13 +49,12 @@ export default function CreateTask({ createTask }: ComponentProps) {
       createTask(formData);
     } finally {
       setOpen(false);
-      if (values)
-        setFormData({
-          content: '',
-          date: {
-            $d: null,
-          },
-        });
+      setFormData({
+        content: '',
+        date: {
+          $d: null,
+        },
+      });
     }
   };
   return (

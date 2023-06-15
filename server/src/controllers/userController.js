@@ -5,6 +5,7 @@ class userController {
   static getUser = async (req, res) => {
     try {
       const { name, password } = req.body;
+      console.log(name)
       const user = await User.findOne({ name });
 
       if (user) {

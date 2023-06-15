@@ -1,15 +1,21 @@
 import { Avatar, IconButton, Menu, MenuItem } from '@mui/material';
 import { MouseEvent, useState } from 'react';
+import Cookies from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
 
 export default function Profile() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const navigate = useNavigate();
 
   const handleMenu = (event: MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
     setAnchorEl(null);
+    Cookies.remove('session');
+    navigate('/');
   };
+
   return (
     <div>
       <IconButton size="large" onClick={handleMenu} color="inherit">
@@ -29,7 +35,6 @@ export default function Profile() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Perfil</MenuItem>
         <MenuItem onClick={handleClose}>Sair</MenuItem>
       </Menu>
     </div>
