@@ -11,7 +11,8 @@ export default function SignIn() {
   const formData = context?.formData ?? { user: '', password: '' };
   const setForm = context?.setFormData;
   const formError = context?.error;
-  const setFormError = context?.setError;
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const setFormError = context?.setError ?? (() => {});
 
   const navigate = useNavigate();
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
