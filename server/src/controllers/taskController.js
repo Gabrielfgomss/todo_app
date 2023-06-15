@@ -3,10 +3,11 @@ import Task from '../models/taskModel.js';
 class taskController {
   static getAll = async (req, res) => {
     try {
-      const tasks = await Task.find();
+      const { userId } = req.params;
+      const tasks = await Task.find({ user: userId });
       res.status(200).json(tasks);
     } catch (error) {
-      res.status(500).json({ error: 'Failed to get tasks' });
+      res.status(500).json({ error: 'Falha ao encontrar' });
     }
   };
 
@@ -21,18 +22,18 @@ class taskController {
       );
       res.status(200).json(task);
     } catch (error) {
-      res.status(500).json({ error: 'Failed to update task status' });
+      res.status(500).json({ error: 'Falha ao atualizar' });
     }
   };
 
   static createTask = async (req, res) => {
     try {
-      const { content, isComplete, isFavorite, date } = req.body;
-      const task = new Task({ content, isComplete, isFavorite, date });
+      const { content, user, isComplete, isFavorite, date } = req.body;
+      const task = new Task({ content, user, isComplete, isFavorite, date });
       await task.save();
       res.status(201).json(task);
     } catch (error) {
-      res.status(500).json({ error: 'Failed to create task' });
+      res.status(500).json({ error: 'Falha ao criar' });
     }
   };
 }

@@ -3,44 +3,48 @@ import { FormEvent, useState, ChangeEvent } from 'react';
 import AddIcon from '@mui/icons-material/Add';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Dayjs } from 'dayjs';
-import { createTask } from '../services/api.ts';
+import { MobileDatePicker } from '@mui/x-date-pickers';
+import Cookies from 'js-cookie';
 
 interface formDataType {
+  id?: string;
   content: string;
-  date: Dayjs | null;
+  date: {
+    $d: Dayjs | null;
+  };
+}
+interface ComponentProps {
+  // eslint-disable-next-line no-unused-vars
+  createTask: (item: formDataType) => Promise<void>;
 }
 
-export default function CreateTask() {
+export default function CreateTask({ createTask }: ComponentProps) {
+  const values = Cookies.get('session');
   const [formData, setFormData] = useState<formDataType>({
     content: '',
-    date: null,
+    date: {
+      $d: null,
+    },
   });
   const [open, setOpen] = useState(false);
 
   const handleOpen = () => {
-    setOpen(true);
+    setOpen(!open);
   };
-  const handleClose = () => {
-    setOpen(false);
+  const handleChangeContent = (event: ChangeEvent<HTMLInputElement>) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      content: event.target.value,
+    }));
   };
-  const handleChange = (event: ChangeEvent<HTMLInputElement> | Dayjs) => {
-    if ('target' in event) {
-      // Handle input change
-      const inputEvent = event as ChangeEvent<HTMLInputElement>;
-      setFormData((prevData) => ({
-        ...prevData,
-        content: inputEvent.target.value,
-      }));
-    } else {
-      // Handle date picker change
-      const pickerEvent = event as Dayjs;
-      setFormData((prevData) => ({
-        ...prevData,
-        date: pickerEvent,
-      }));
-    }
+  const handleChange = (pickerEvent: Dayjs | null) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      date: {
+        $d: pickerEvent,
+      },
+    }));
   };
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -48,6 +52,13 @@ export default function CreateTask() {
       createTask(formData);
     } finally {
       setOpen(false);
+      if (values)
+        setFormData({
+          content: '',
+          date: {
+            $d: null,
+          },
+        });
     }
   };
   return (
@@ -62,7 +73,7 @@ export default function CreateTask() {
       </Fab>
       <Modal
         open={open}
-        onClose={handleClose}
+        onClose={handleOpen}
         aria-labelledby="popup-title"
         aria-describedby="popup-description"
         sx={{
@@ -80,16 +91,16 @@ export default function CreateTask() {
             id="content"
             name="content"
             value={formData.content}
-            onChange={handleChange}
+            onChange={handleChangeContent}
             className="w-full"
             label="Adicionar tarefa"
             color="customText"
             required
           />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker
+            <MobileDatePicker
               label="Selecione uma data"
-              value={formData.date}
+              value={formData.date.$d}
               onChange={(newValue) => handleChange(newValue)}
             />
           </LocalizationProvider>

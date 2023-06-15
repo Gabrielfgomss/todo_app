@@ -1,13 +1,11 @@
+/* eslint-disable no-unused-vars */
 import { IconButton } from '@mui/material';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import RadioButtonUncheckedOutlinedIcon from '@mui/icons-material/RadioButtonUncheckedOutlined';
 import RadioButtonCheckedIcon from '@mui/icons-material/RadioButtonChecked';
 import TurnedInOutlinedIcon from '@mui/icons-material/TurnedInOutlined';
 import TurnedInNotOutlinedIcon from '@mui/icons-material/TurnedInNotOutlined';
-import { useContext, useEffect, useState } from 'react';
 import { Dayjs } from 'dayjs';
-import { updateItem } from '../services/api.ts';
-import { ContextList } from '../context/ContextList.tsx';
 
 interface TaskProps {
   id: string;
@@ -15,6 +13,15 @@ interface TaskProps {
   dated: Dayjs | null;
   isFavorite: boolean;
   isComplete: boolean;
+  updateItem: ({
+    id,
+    isFavorite,
+    isComplete,
+  }: {
+    id: string;
+    isFavorite?: boolean;
+    isComplete?: boolean;
+  }) => void;
 }
 
 export default function Task({
@@ -23,22 +30,13 @@ export default function Task({
   dated,
   isFavorite,
   isComplete,
+  updateItem,
 }: TaskProps) {
-  const context = useContext(ContextList);
-  const setWasClicked = context?.setWasClicked;
-  const wasClicked = context?.wasClicked;
-
   const handleFavorite = () => {
-    if (setWasClicked && wasClicked !== undefined) {
-      setWasClicked(!wasClicked);
-      updateItem({ id, isFavorite: !isFavorite });
-    }
+    updateItem({ id, isFavorite: !isFavorite });
   };
   const handleComplete = () => {
-    if (setWasClicked && wasClicked !== undefined) {
-      setWasClicked(!wasClicked);
-      updateItem({ id, isComplete: !isComplete });
-    }
+    updateItem({ id, isComplete: !isComplete });
   };
   return (
     <div className="bg-[#DAD7CD] flex justify-between p-4 rounded-lg">

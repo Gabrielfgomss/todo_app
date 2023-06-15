@@ -1,9 +1,40 @@
-import { useState, ChangeEvent, createContext, ReactNode } from 'react';
+import {
+  useState,
+  ChangeEvent,
+  createContext,
+  ReactNode,
+  Dispatch,
+  SetStateAction,
+  useMemo,
+  useCallback,
+} from 'react';
 
 interface FormContextTypes {
   formData: { user: string; password: string };
+  setFormData: Dispatch<
+    SetStateAction<{
+      user: string;
+      password: string;
+    }>
+  >;
   // eslint-disable-next-line no-unused-vars
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  error: {
+    userError: boolean;
+    passwordError: boolean;
+    userMessage: string;
+    passwordMessage: string;
+  };
+  setError:
+    | Dispatch<
+        SetStateAction<{
+          userError: boolean;
+          passwordError: boolean;
+          userMessage: string;
+          passwordMessage: string;
+        }>
+      >
+    | undefined;
 }
 
 const FormContext = createContext<FormContextTypes | undefined>(undefined);
@@ -17,17 +48,36 @@ function FormContextProvider({ children }: MyContextProviderProps) {
     user: '',
     password: '',
   });
+  const [error, setError] = useState<{
+    userError: boolean;
+    passwordError: boolean;
+    userMessage: string;
+    passwordMessage: string;
+  }>({
+    userError: false,
+    passwordError: false,
+    userMessage: '',
+    passwordMessage: '',
+  });
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = useCallback((event: ChangeEvent<HTMLInputElement>) => {
     setFormData((prevData) => ({
       ...prevData,
       [event.target.name]: event.target.value,
     }));
-  };
+  }, []);
+  const contextValue = useMemo(
+    () => ({
+      formData,
+      setFormData,
+      handleChange,
+      error,
+      setError,
+    }),
+    [formData, setFormData, handleChange, error, setError]
+  );
   return (
-    <FormContext.Provider value={{ formData, handleChange }}>
-      {children}
-    </FormContext.Provider>
+    <FormContext.Provider value={contextValue}>{children}</FormContext.Provider>
   );
 }
 

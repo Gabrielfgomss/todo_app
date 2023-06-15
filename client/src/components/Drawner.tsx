@@ -1,9 +1,8 @@
-import { Drawer, IconButton, MenuItem, ClickAwayListener } from '@mui/material';
+import { Drawer, IconButton, MenuItem } from '@mui/material';
 import { useState, useContext, MouseEvent } from 'react';
 import TurnedInIcon from '@mui/icons-material/TurnedIn';
 import TaskIcon from '@mui/icons-material/Task';
 import ScheduleIcon from '@mui/icons-material/Schedule';
-import ListAltIcon from '@mui/icons-material/ListAlt';
 import HomeIcon from '@mui/icons-material/Home';
 import MenuIcon from '@mui/icons-material/Menu';
 import { ContextList } from '../context/ContextList.tsx';

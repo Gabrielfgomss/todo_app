@@ -4,7 +4,7 @@ import taskController from '../controllers/taskController.js';
 const router = express.Router();
 
 router
-  .get('/tasks', taskController.getAll)
+  .get('/tasks/:userId', taskController.getAll)
   .post('/tasks', taskController.createTask)
   .patch('/tasks/:taskId', taskController.updateTask);
 

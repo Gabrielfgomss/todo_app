@@ -7,6 +7,7 @@ import App from './App.tsx';
 import Dashboard from './pages/Dashboard.tsx';
 import SignIn from './pages/SignIn.tsx';
 import CustomStyles from './styles/themeProvider.tsx';
+import AuthRequired from './components/AuthRequired.tsx';
 
 const router = createBrowserRouter([
   {
@@ -18,12 +19,17 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: '/dashboard',
-        element: <Dashboard />,
-      },
-      {
         path: '/signin',
         element: <SignIn />,
+      },
+      {
+        element: <AuthRequired />,
+        children: [
+          {
+            path: '/dashboard',
+            element: <Dashboard />,
+          },
+        ],
       },
     ],
   },

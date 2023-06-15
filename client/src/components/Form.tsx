@@ -1,4 +1,11 @@
-import { ReactNode, useState, FormEvent, useContext } from 'react';
+import {
+  ReactNode,
+  useState,
+  FormEvent,
+  useContext,
+  Dispatch,
+  SetStateAction,
+} from 'react';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import InputAdornment from '@mui/material/InputAdornment';
@@ -14,8 +21,18 @@ interface FormProps {
   buttonAction: string;
   // eslint-disable-next-line no-unused-vars
   handleSubmit: (event: FormEvent<HTMLFormElement>) => void;
-  invalidUser?: boolean;
-  invalidPassword?: boolean;
+  userError?: boolean;
+  passwordError?: boolean;
+  userMessage?: string;
+  passwordMessage?: string;
+  setFormError: Dispatch<
+    SetStateAction<{
+      userError: boolean;
+      passwordError: boolean;
+      userMessage: string;
+      passwordMessage: string;
+    }>
+  >;
 }
 
 export default function Form({
@@ -23,8 +40,11 @@ export default function Form({
   children,
   buttonAction,
   handleSubmit,
-  invalidUser,
-  invalidPassword,
+  userError,
+  passwordError,
+  userMessage,
+  passwordMessage,
+  setFormError,
 }: FormProps) {
   const context = useContext(FormContext);
   const formData = context?.formData ?? { user: '', password: '' };
@@ -46,9 +66,15 @@ export default function Form({
           value={formData.user}
           onChange={handleChange}
           color="customSecondary"
-          error={invalidUser}
+          error={userError}
           required
-          helperText={invalidUser ? 'Usuário inexistente ou errado' : ''}
+          helperText={userError ? userMessage : ''}
+          onBlur={() =>
+            setFormError((prevData) => ({
+              ...prevData,
+              userError: false,
+            }))
+          }
         />
         <TextField
           label="Senha"
@@ -58,8 +84,14 @@ export default function Form({
           value={formData.password}
           onChange={handleChange}
           required
-          error={invalidPassword}
-          helperText={invalidPassword ? 'Senha incorreta' : ''}
+          error={passwordError}
+          helperText={passwordError ? passwordMessage : ''}
+          onBlur={() =>
+            setFormError((prevData) => ({
+              ...prevData,
+              passwordError: false,
+            }))
+          }
           type={showPassword ? 'text' : 'password'}
           InputProps={{
             endAdornment: (
