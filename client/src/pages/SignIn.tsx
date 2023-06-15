@@ -28,6 +28,12 @@ export default function SignIn() {
           user: '',
           password: '',
         });
+      setFormError(() => ({
+        passwordError: true,
+        passwordMessage: '',
+        userError: true,
+        userMessage: '',
+      }));
       navigate('/dashboard');
     } catch (error: any) {
       if (setFormError) {
