@@ -18,7 +18,6 @@ export default function Login() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const response = await getUser(formData);
-    console.log(response);
     if (response.exists) {
       Cookies.set('session', response.user._id);
       if (setData)
@@ -27,9 +26,9 @@ export default function Login() {
           password: '',
         });
       setFormError(() => ({
-        passwordError: true,
+        passwordError: false,
         passwordMessage: '',
-        userError: true,
+        userError: false,
         userMessage: '',
       }));
       navigate('/dashboard');

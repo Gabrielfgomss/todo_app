@@ -29,9 +29,9 @@ export default function SignIn() {
           password: '',
         });
       setFormError(() => ({
-        passwordError: true,
+        passwordError: false,
         passwordMessage: '',
-        userError: true,
+        userError: false,
         userMessage: '',
       }));
       navigate('/dashboard');
