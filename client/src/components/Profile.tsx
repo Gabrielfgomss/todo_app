@@ -12,14 +12,16 @@ export default function Profile() {
   };
   const handleClose = () => {
     setAnchorEl(null);
+  };
+  const handleLogOut = () => {
+    setAnchorEl(null);
     Cookies.remove('session');
     navigate('/');
   };
-
   return (
     <div>
       <IconButton size="large" onClick={handleMenu} color="inherit">
-        <Avatar sx={{ width: 24, height: 24 }} src="src/assets/gabriel.png" />
+        <Avatar sx={{ width: 24, height: 24 }} />
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -35,7 +37,7 @@ export default function Profile() {
         open={Boolean(anchorEl)}
         onClose={handleClose}
       >
-        <MenuItem onClick={handleClose}>Sair</MenuItem>
+        <MenuItem onClick={handleLogOut}>Sair</MenuItem>
       </Menu>
     </div>
   );
