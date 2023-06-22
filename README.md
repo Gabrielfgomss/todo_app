@@ -1,6 +1,6 @@
 # TaskManager
 
-![TaskManager](https://github.com/gabrielfgomss/TaskManager/blob/main/taskmanager.png)
+![TaskManager](todo_app.jpeg)
 
 ## Descrição
 
@@ -29,17 +29,18 @@ TaskManager é um aplicativo de gerenciamento de tarefas desenvolvido em TypeScr
 
 1. Clone o repositório:
    ```bash
-  git clone https://github.com/gabrielfgomss/TaskManager.git
+   git clone https://github.com/gabrielfgomss/TaskManager.git
+   ```
 2. Instale as dependências do frontend:
-  cd TaskManager/frontend
-  npm install
+   cd TaskManager/frontend
+   npm install
 3. Instale as dependências do backend:
-  cd ../backend
-  npm install
+   cd ../backend
+   npm install
 4. Inicie o servidor de desenvolvimento:
-  npm run dev
+   npm run dev
 5. Abra o aplicativo no navegador:
-  http://localhost:3000
+   http://localhost:3000
 
 👨‍💻 Autor
 Desenvolvido por Gabriel Gomes Fernandes
