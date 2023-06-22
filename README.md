@@ -1,6 +1,6 @@
 # TaskManager
 
-![TaskManager](todo_app.jpeg)
+<img src="todo_app.jpeg" alt="TaskManager App" width="400" height="200">
 
 ## Descrição
 
