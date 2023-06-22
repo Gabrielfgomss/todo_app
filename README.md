@@ -11,36 +11,12 @@ TaskManager é um aplicativo de gerenciamento de tarefas desenvolvido em TypeScr
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
 ![](todo_app.jpeg)
 
-## Detalhes do projeto
-
-Textos e imagens que descrevam seu projeto, suas conquistas, seus desafios, próximos passos, etc...
-
-# TaskManager
-
-![TaskManager](todo_app.jpeg)
-
-## Descrição
-
-TaskManager é um aplicativo de gerenciamento de tarefas desenvolvido em TypeScript, React, Vite, Express, Axios, MongoDB, Mongoose, Material UI e Tailwind. Este projeto tem como objetivo fornecer uma interface amigável para os usuários organizarem suas tarefas diárias de forma eficiente.
-
 ## 🚀 Funcionalidades
 
 - ✏️ Adicionar tarefas
 - ✅ Marcar tarefas como concluídas
 - 🔍 Filtrar tarefas por status
 - 👥 Gerenciamento de usuários com autenticação
-
-## 💻 Tecnologias utilizadas
-
-- TypeScript
-- React
-- Vite
-- Express
-- Axios
-- MongoDB
-- Mongoose
-- Material UI
-- Tailwind
 
 ## ⚙️ Instalação
 
