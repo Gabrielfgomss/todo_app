@@ -9,7 +9,7 @@ TaskManager é um aplicativo de gerenciamento de tarefas.
 | :rocket: URL         | [https://url-deploy.com.br](https://todo-project-vite-3szg4dp7q-gabrielfgomss.vercel.app)
 | :fire: Desafio     | https://url-do-desafio.com.br
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
-![](todo_app.jpeg)
+![](todo_app.jpeg#vitrine-dev)
 
 ## Detalhes do projeto
 
