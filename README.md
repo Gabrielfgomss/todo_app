@@ -10,7 +10,7 @@ TaskManager é um aplicativo de gerenciamento de tarefas.
 | :fire: Desafio     | https://url-do-desafio.com.br
 <!-- Inserir imagem com a #vitrinedev ao final do link -->
 
-![](todo_app.jpeg#vitrine-dev)
+![](todo_app.jpeg#vitrinedev)
 
 ## Detalhes do projeto
 
